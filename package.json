@@ -1,6 +1,6 @@
 {
   "homepage": "https://saiteja.github.io/coffeeshop/",
-  "name":"coffeeshop",
+  "name": "coffeeshop",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
