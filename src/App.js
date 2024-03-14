@@ -20,9 +20,10 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={val}>
-        {flag === 0 || flag === 1 ? (
-          <Login />
-        ) : (
+        {/* {flag === 0 || flag === 1 ? ( //This condition is commented because to diaplay directly products page.
+          
+          <Login/>
+        ) : ( */} 
           <AppContextProvider>
             <Router>
               <Navbar />
@@ -35,7 +36,7 @@ function App() {
               <Footer />
             </Router>
           </AppContextProvider>
-        )}
+        {/* )} */}
       </UserContext.Provider>
     </div>
   );
