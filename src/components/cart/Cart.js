@@ -10,11 +10,13 @@ import "./Cart.css";
 import { Navigate } from "react-router-dom";
 export default function Cart() {
   const navigate = useNavigate();
-  const { cartItems, setCartItems, products, orders, setOrders } =
+  // const { cartItems, setCartItems, products, orders, setOrders } =
+  const { flag, cartItems, setCartItems, products, orders, setOrders, user } =
     useContext(AppContext);
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const [order, setOrder] = useState({});
   const [orderValue, setOrderValue] = useState(0);
+  const [items, setItems] = useState(0);
 
   useEffect(() => {
     setOrderValue((prev) =>
@@ -22,6 +24,10 @@ export default function Cart() {
         return total + value.price * (cartItems[value.id] ?? 0);
       }, 0)
     );
+    const values = Object.values(cartItems);
+    let total = values.filter(((elem)=>elem>0))
+    total = total.length;
+    setItems(() => total);
   }, [cartItems]);
 
   const updateCart = (id, qty) => {
@@ -29,15 +35,19 @@ export default function Cart() {
   };
 
   const submitOrder = () => {
-    order.date = Date().slice(0, 15);
-    order.email = user.email;
-    order.details = cartItems;
-    order.total = orderValue;
-    order.status = "pending";
-    setOrder((prev) => ({ ...prev, order }));
-    setOrders((prev) => [...prev, order]);
-    setCartItems(() => []);
-    navigate("/ecomm-react/order");
+    if (flag < 2) {
+      navigate("/coffeeshop/login");
+    } else {
+      order.date = Date().slice(0, 15);
+      order.email = user.email;
+      order.details = cartItems;
+      order.total = orderValue;
+      order.status = "pending";
+      setOrder((prev) => ({ ...prev, order }));
+      setOrders((prev) => [...prev, order]);
+      setCartItems(() => []);
+      navigate("/coffeeshop/order");
+    }
   };
 
   return (
@@ -90,7 +100,10 @@ export default function Cart() {
             </table>
           </div>
           <div className="Cart-div-right">
-            <div className="Cart-order-value">Order Value: ₹{orderValue}</div>
+            <div className="Cart-order-value">
+                  Subtotal({items} item{items > 1 && "s"}): ₹{orderValue}
+              {/* Order Value: ₹{orderValue} */}
+              </div>
             <div className="Cart-order-value">
               <button onClick={submitOrder} className="Cart-place-order">
                 {/* Submit Order */}Proceed to Buy

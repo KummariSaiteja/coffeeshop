@@ -20,8 +20,8 @@
 .Product-button{
     /* background-color: #3b120f; */
     width: 200px;
-    /* color: hsl(4, 59%, 15%); */
-    background-color: green;
+    color: hsl(4, 59%, 15%); 
+    /* background-color: green; */
  
 }
 
